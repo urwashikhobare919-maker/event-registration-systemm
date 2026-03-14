@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Event Registration</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<header class="navbar">
+
+<div class="logo">Event Registration System</div>
+
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+<a href="admin-login.html">Admin Login</a>
+</nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>AI & Cyber Security Workshop 2026</h1>
+
+<p>Learn Artificial Intelligence, Cyber Security and Future Technologies</p>
+
+<div id="timer"></div>
+
+<a href="#register" class="hero-btn">Register Now</a>
+
+</section>
+
+
+<!-- EVENT INFO -->
+
+<section class="info" data-aos="fade-up">
+
+<div class="card">
+<h3>📅 Date</h3>
+<p>20 June 2026</p>
+</div>
+
+<div class="card">
+<h3>📍 Location</h3>
+<p>Nagpur</p>
+</div>
+
+<div class="card">
+<h3>🎤 Speakers</h3>
+<p>Industry Experts</p>
+</div>
+
+<div class="card">
+<h3>👥 Seats</h3>
+<p>500 Participants</p>
+</div>
+
+</section>
+
+
+<!-- STATISTICS -->
+
+<section class="stats" data-aos="fade-up">
+
+<div class="stat">
+<h2 id="participants">0</h2>
+<p>Participants</p>
+</div>
+
+<div class="stat">
+<h2>20+</h2>
+<p>Speakers</p>
+</div>
+
+<div class="stat">
+<h2>5</h2>
+<p>Sessions</p>
+</div>
+
+</section>
+
+
+<!-- SCHEDULE -->
+
+<section class="schedule" data-aos="fade-up">
+
+<h2>Event Schedule</h2>
+
+<ul>
+
+<li>10:00 AM – Opening Ceremony</li>
+<li>11:00 AM – AI Workshop</li>
+<li>1:00 PM – Lunch Break</li>
+<li>2:00 PM – Cyber Security Session</li>
+<li>4:00 PM – Certificate Distribution</li>
+
+</ul>
+
+</section>
+
+
+<!-- REGISTRATION -->
+
+<main id="register">
+
+<div class="container">
+
+<h1>Event Registration</h1>
+
+<form id="registrationForm">
+
+<input type="text" placeholder="Full Name" id="name" required>
+
+<input type="email" placeholder="Email" id="email" required>
+
+<input type="text" placeholder="Phone" id="phone" required>
+
+<input type="text" placeholder="Organization" id="organization" required>
+
+<select id="event">
+
+<option value="Workshop 2026">Workshop 2026</option>
+<option value="AI Seminar">AI Seminar</option>
+
+</select>
+
+<button type="submit">Register</button>
+
+<div id="loader" class="loader" style="display:none;"></div>
+
+</form>
+
+<div id="result"></div>
+
+</div>
+
+</main>
+
+
+<!-- HOW IT WORKS -->
+
+<section class="steps">
+
+<h2>How It Works</h2>
+
+<div class="step-container">
+
+<div class="step">1️⃣ Register</div>
+
+<div class="step">2️⃣ Get QR Ticket</div>
+
+<div class="step">3️⃣ Scan at Entry</div>
+
+<div class="step">4️⃣ Mark Attendance</div>
+
+</div>
+
+</section>
+
+
+<!-- TESTIMONIALS -->
+
+<section class="testimonials">
+
+<h2>Participant Feedback</h2>
+
+<div class="reviews">
+
+<div class="review">
+<p>"Amazing workshop and very informative!"</p>
+<h4>- Student</h4>
+</div>
+
+<div class="review">
+<p>"Loved the AI session and networking."</p>
+<h4>- Developer</h4>
+</div>
+
+<div class="review">
+<p>"Very well organized event."</p>
+<h4>- Engineer</h4>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GALLERY -->
+
+<section class="gallery">
+
+<h2>Previous Events</h2>
+
+<div class="gallery-grid">
+
+<img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b">
+<img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df">
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
+<img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678">
+
+</div>
+
+</section>
+
+
+<!-- CHATBOT -->
+
+<div class="chatbot" onclick="openChat()">🤖</div>
+
+
+<footer class="footer">
+
+<p>© 2026 Event Registration System | Developed by Urwashi Khobare</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+
+AOS.init();
+
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("active");
+}
+
+
+/* PARTICLES */
+
+particlesJS("particles-js", {
+particles:{
+number:{value:80},
+color:{value:"#ffffff"},
+shape:{type:"circle"},
+opacity:{value:0.5},
+size:{value:3},
+line_linked:{
+enable:true,
+distance:150,
+color:"#ffffff",
+opacity:0.4,
+width:1
+},
+move:{enable:true,speed:3}
+},
+interactivity:{
+events:{onhover:{enable:true,mode:"repulse"}}
+}
+});
+
+
+/* COUNTER */
+
+let count=0;
+
+let counter=setInterval(()=>{
+
+count++;
+
+document.getElementById("participants").innerText=count;
+
+if(count>=500) clearInterval(counter);
+
+},5);
+
+
+/* COUNTDOWN */
+
+let eventDate=new Date("June 20, 2026 10:00:00").getTime();
+
+setInterval(()=>{
+
+let now=new Date().getTime();
+
+let distance=eventDate-now;
+
+let days=Math.floor(distance/(1000*60*60*24));
+
+let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+document.getElementById("timer").innerHTML=
+"Event Starts In : "+days+" Days "+hours+" Hours";
+
+},1000);
+
+
+/* CHATBOT */
+
+function openChat(){
+alert("Hello! Need help with event registration?");
+}
+
+</script>
+
+</body>
+</html>

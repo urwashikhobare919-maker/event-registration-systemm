@@ -1,0 +1,259 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Admin Login</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+/* BODY */
+
+body{
+background:linear-gradient(135deg,#7C3AED,#A855F7);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* NAVBAR */
+
+.navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#4C1D95;
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 40px;
+z-index:1000;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+/* NAV LINKS */
+
+.navbar nav{
+display:flex;
+}
+
+.navbar nav a{
+color:white;
+text-decoration:none;
+margin-left:25px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.navbar nav a:hover{
+color:#E9D5FF;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+font-size:28px;
+cursor:pointer;
+color:white;
+}
+
+/* MAIN CONTENT */
+
+main{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+padding-top:90px;
+}
+
+/* LOGIN BOX */
+
+.container{
+background:white;
+padding:40px;
+border-radius:12px;
+text-align:center;
+width:320px;
+box-shadow:0 12px 30px rgba(0,0,0,0.25);
+}
+
+.container h2{
+margin-bottom:20px;
+color:#4C1D95;
+}
+
+/* INPUT */
+
+input{
+width:100%;
+padding:12px;
+margin:12px 0;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+/* BUTTON */
+
+button{
+background:#6C2BD9;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+transition:0.3s;
+}
+
+button:hover{
+background:#4C1D95;
+}
+
+/* FOOTER */
+
+.footer{
+background:#4C1D95;
+color:white;
+text-align:center;
+padding:15px;
+font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hamburger{
+display:block;
+}
+
+.navbar nav{
+display:none;
+flex-direction:column;
+background:#4C1D95;
+position:absolute;
+top:65px;
+left:0;
+width:100%;
+padding:20px;
+}
+
+.navbar nav a{
+padding:12px 0;
+margin-left:0;
+}
+
+.navbar nav.active{
+display:flex;
+}
+
+.container{
+width:90%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+<div class="logo">Event Registration System</div>
+
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+
+</nav>
+
+</header>
+
+<!-- LOGIN SECTION -->
+
+<main>
+
+<div class="container">
+
+<h2>Admin Login</h2>
+
+<input type="text" id="username" placeholder="Username">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="error" style="color:red;"></p>
+
+</div>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<p>© 2026 Event Registration System</p>
+<p>Developed by Urwashi Khobare</p>
+
+</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("active");
+}
+
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "admin123";
+
+function login(){
+
+const user = document.getElementById("username").value;
+const pass = document.getElementById("password").value;
+
+if(user === ADMIN_USER && pass === ADMIN_PASS){
+
+localStorage.setItem("admin","true");
+window.location.href = "admin.html";
+
+}else{
+
+document.getElementById("error").innerText="Invalid Login";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
+```

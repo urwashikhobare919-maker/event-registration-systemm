@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>QR Attendance Scanner</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+/* BODY */
+
+body{
+background:linear-gradient(135deg,#7C3AED,#A855F7);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px;
+}
+
+/* CONTAINER */
+
+.container{
+background:white;
+width:400px;
+max-width:90%;
+padding:35px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* TITLE */
+
+h2{
+color:#4C1D95;
+margin-bottom:20px;
+}
+
+/* QR READER */
+
+#reader{
+width:300px;
+margin:auto;
+border:3px solid #6C2BD9;
+border-radius:10px;
+padding:10px;
+}
+
+/* STATUS */
+
+.status{
+margin-top:18px;
+font-weight:bold;
+color:#6C2BD9;
+}
+
+/* LOADER */
+
+.loader{
+border:5px solid #f3f3f3;
+border-top:5px solid #6C2BD9;
+border-radius:50%;
+width:35px;
+height:35px;
+animation:spin 1s linear infinite;
+margin:15px auto;
+display:none;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* UPLOAD SECTION */
+
+.upload{
+margin-top:25px;
+}
+
+.upload h3{
+color:#4C1D95;
+margin-bottom:10px;
+}
+
+/* FILE INPUT */
+
+input[type=file]{
+padding:10px;
+border-radius:6px;
+border:1px solid #ddd;
+width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Scan Participant QR Code</h2>
+
+<div id="reader"></div>
+
+<p class="status" id="status">Waiting for QR Scan...</p>
+
+<div id="loader" class="loader"></div>
+
+<div class="upload">
+
+<h3>OR Upload QR Image</h3>
+
+<input type="file" id="qrImage" accept="image/*">
+
+</div>
+
+</div>
+
+<script>
+
+/* GOOGLE SCRIPT API */
+
+const apiURL =
+"https://script.google.com/macros/s/AKfycbzV9OhNFOTCypB1JsV1WOF8j_q16urcYx9i2Rq8nnKOC1pcE_yQ_CKFrMkBp8Tf_Ed8hA/exec";
+
+/* QR SUCCESS FUNCTION */
+
+function onScanSuccess(decodedText){
+
+document.getElementById("status").innerText =
+"QR Detected: " + decodedText;
+
+document.getElementById("loader").style.display="block";
+
+fetch(apiURL + "?regId=" + decodedText)
+
+.then(res => res.text())
+
+.then(data => {
+
+document.getElementById("loader").style.display="none";
+
+document.getElementById("status").innerText = data;
+
+alert(data);
+
+})
+
+.catch(err => {
+
+document.getElementById("loader").style.display="none";
+
+document.getElementById("status").innerText =
+"Error marking attendance";
+
+console.error(err);
+
+});
+
+}
+
+/* START CAMERA */
+
+function startScanner(){
+
+Html5Qrcode.getCameras()
+
+.then(devices => {
+
+if(devices.length){
+
+const cameraId = devices[0].id;
+
+const html5QrCode = new Html5Qrcode("reader");
+
+html5QrCode.start(
+cameraId,
+{ fps:10, qrbox:250 },
+onScanSuccess
+);
+
+}else{
+
+document.getElementById("status").innerText =
+"No camera found";
+
+}
+
+})
+
+.catch(err => {
+
+document.getElementById("status").innerText =
+"Camera permission denied";
+
+console.error(err);
+
+});
+
+}
+
+startScanner();
+
+/* IMAGE UPLOAD */
+
+document.getElementById("qrImage")
+.addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+const html5QrCode = new Html5Qrcode("reader");
+
+document.getElementById("loader").style.display="block";
+
+html5QrCode.scanFile(file,true)
+
+.then(decodedText => {
+
+document.getElementById("loader").style.display="none";
+
+onScanSuccess(decodedText);
+
+})
+
+.catch(err => {
+
+document.getElementById("loader").style.display="none";
+
+alert("QR not detected in image");
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
