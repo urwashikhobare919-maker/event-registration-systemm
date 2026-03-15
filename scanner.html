@@ -27,16 +27,16 @@ min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:40px;
+padding:20px;
 }
 
 /* CONTAINER */
 
 .container{
 background:white;
-width:400px;
-max-width:90%;
-padding:35px;
+width:100%;
+max-width:420px;
+padding:30px;
 border-radius:12px;
 text-align:center;
 box-shadow:0 12px 30px rgba(0,0,0,0.2);
@@ -47,16 +47,27 @@ box-shadow:0 12px 30px rgba(0,0,0,0.2);
 h2{
 color:#4C1D95;
 margin-bottom:20px;
+font-size:22px;
 }
 
 /* QR READER */
 
 #reader{
-width:300px;
+width:100%;
+max-width:320px;
+aspect-ratio:1/1;
 margin:auto;
 border:3px solid #6C2BD9;
-border-radius:10px;
-padding:10px;
+border-radius:12px;
+overflow:hidden;
+}
+
+/* FORCE VIDEO TO FIT */
+
+#reader video{
+width:100% !important;
+height:100% !important;
+object-fit:cover;
 }
 
 /* STATUS */
@@ -65,6 +76,7 @@ padding:10px;
 margin-top:18px;
 font-weight:bold;
 color:#6C2BD9;
+font-size:15px;
 }
 
 /* LOADER */
@@ -94,6 +106,7 @@ margin-top:25px;
 .upload h3{
 color:#4C1D95;
 margin-bottom:10px;
+font-size:18px;
 }
 
 /* FILE INPUT */
@@ -103,6 +116,33 @@ padding:10px;
 border-radius:6px;
 border:1px solid #ddd;
 width:100%;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width:600px){
+
+.container{
+padding:20px;
+max-width:350px;
+}
+
+#reader{
+max-width:260px;
+}
+
+h2{
+font-size:20px;
+}
+
+.upload h3{
+font-size:16px;
+}
+
+.status{
+font-size:14px;
+}
+
 }
 
 </style>
@@ -182,15 +222,38 @@ Html5Qrcode.getCameras()
 
 .then(devices => {
 
-if(devices.length){
+if(devices && devices.length){
 
-const cameraId = devices[0].id;
+let cameraId = devices[0].id;
+
+/* TRY TO FIND BACK CAMERA */
+
+devices.forEach(device => {
+
+if(device.label.toLowerCase().includes("back") ||
+   device.label.toLowerCase().includes("rear") ||
+   device.label.toLowerCase().includes("environment"))
+{
+cameraId = device.id;
+}
+
+});
 
 const html5QrCode = new Html5Qrcode("reader");
 
 html5QrCode.start(
 cameraId,
-{ fps:10, qrbox:250 },
+{
+fps:10,
+qrbox:function(viewfinderWidth, viewfinderHeight){
+
+let minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+let qrboxSize = Math.floor(minEdge * 0.8);
+
+return { width: qrboxSize, height: qrboxSize };
+
+}
+},
 onScanSuccess
 );
 
