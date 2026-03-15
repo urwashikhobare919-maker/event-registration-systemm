@@ -410,22 +410,7 @@ width:100%;
 border-radius:10px;
 }
 
-.chatbot{
-position:fixed;
-bottom:25px;
-right:25px;
-background:#6C2BD9;
-color:white;
-width:65px;
-height:65px;
-display:flex;
-justify-content:center;
-align-items:center;
-border-radius:50%;
-font-size:28px;
-cursor:pointer;
-box-shadow:0 10px 20px rgba(0,0,0,0.3);
-}
+
 /* CONTACT ADMIN */
 
 .contact{
