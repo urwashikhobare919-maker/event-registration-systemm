@@ -129,7 +129,15 @@
 
 <input type="email" placeholder="Email" id="email" required>
 
-<input type="text" placeholder="Phone" id="phone" required>
+<input 
+type="tel" 
+placeholder="Phone" 
+id="phone" 
+maxlength="10"
+pattern="[0-9]{10}"
+inputmode="numeric"
+oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+required>
 
 <input type="text" placeholder="Organization" id="organization" required>
 
@@ -222,8 +230,6 @@
 
 <!-- CHATBOT -->
 
-<div class="chatbot" onclick="openChat()">🤖</div>
-
 
 <footer class="footer">
 
@@ -304,8 +310,11 @@ document.getElementById("timer").innerHTML=
 },1000);
 
 
+/* CHATBOT */
+
+
+
 </script>
-  <script src="//code.tidio.co/apv46qekqryxei8gtbecrbq3gnnwxzcn.js" async></script>
 
 </body>
 </html>
